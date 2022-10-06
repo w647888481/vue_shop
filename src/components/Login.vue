@@ -25,7 +25,7 @@
           <el-input
             v-model="loginForm.password"
             type="password"
-            prefix-icon="iconfont icon-lock"
+            prefix-icon="iconfont icon-3702mima"
           ></el-input>
         </el-form-item>
         <!-- 按钮 -->
@@ -84,7 +84,7 @@ export default {
 <style lang="less" scoped>
 .login_container {
   height: 100%;
-  background-color: skyblue;
+  background-color: #77a1d3;
 }
 
 .login_box {
