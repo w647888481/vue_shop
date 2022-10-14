@@ -12,7 +12,7 @@
         <el-col :span="6">
           <el-input
             placeholder="请输入内容"
-            v-model="queryInfo.query"
+            v-model="querInfo.query"
             clearable
             @clear="getUserList()"
           >
@@ -81,9 +81,9 @@
       <el-pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="queryInfo.pagenum"
+        :current-page="querInfo.pagenum"
         :page-sizes="[10, 20, 50, 100]"
-        :page-size="queryInfo.pagesize"
+        :page-size="querInfo.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
       >
@@ -202,7 +202,8 @@ export default {
       }
     }
     return {
-      queryInfo: {
+      //查询条件
+      querInfo: {
         query: '',
         pagenum: 1,
         pagesize: 10,
@@ -270,7 +271,7 @@ export default {
     //获取用户列表数据
     async getUserList() {
       const { data: res } = await this.$http.get('users', {
-        params: this.queryInfo,
+        params: this.querInfo,
       })
       if (res.meta.status !== 200)
         return this.$message.error('获取用户列表失败！')
@@ -279,12 +280,12 @@ export default {
     },
     //监听pagesize变化
     handleSizeChange(newSize) {
-      this.queryInfo.pagesize = newSize
+      this.querInfo.pagesize = newSize
       this.getUserList()
     },
     //监听页面数据变化
     handleCurrentChange(newPage) {
-      this.queryInfo.pagenum = newPage
+      this.querInfo.pagenum = newPage
       this.getUserList()
     },
     //监听switch状态变化
