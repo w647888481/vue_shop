@@ -3,30 +3,17 @@
     <div class="login_box">
       <!-- 头像区域 -->
       <div class="avatar">
-        <img src="../assets/logo.png" alt="" />
+        <img src="../assets/user.jpg" alt="" />
       </div>
       <!-- 登录表单区域 -->
-      <el-form
-        ref="loginFormRef"
-        :model="loginForm"
-        :rules="loginFormRules"
-        class="login_form"
-        label-width="0px"
-      >
+      <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" class="login_form" label-width="0px">
         <!-- 用户名 -->
         <el-form-item prop="username">
-          <el-input
-            v-model="loginForm.username"
-            prefix-icon="iconfont icon-user"
-          ></el-input>
+          <el-input v-model="loginForm.username" prefix-icon="iconfont icon-user"></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
-          <el-input
-            v-model="loginForm.password"
-            type="password"
-            prefix-icon="iconfont icon-3702mima"
-          ></el-input>
+          <el-input v-model="loginForm.password" type="password" prefix-icon="iconfont icon-3702mima"></el-input>
         </el-form-item>
         <!-- 按钮 -->
         <el-form-item class="btns">
@@ -128,6 +115,6 @@ export default {
 
 .btns {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 </style>

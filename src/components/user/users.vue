@@ -10,25 +10,12 @@
       <!-- 搜索区域 -->
       <el-row :gutter="20">
         <el-col :span="6">
-          <el-input
-            placeholder="请输入内容"
-            v-model="querInfo.query"
-            clearable
-            @clear="getUserList()"
-          >
-            <el-button
-              slot="append"
-              icon="el-icon-search"
-              @click="getUserList()"
-            ></el-button>
+          <el-input placeholder="请输入内容" v-model="querInfo.query" clearable @clear="getUserList()">
+            <el-button slot="append" icon="el-icon-search" @click="getUserList()"></el-button>
           </el-input>
         </el-col>
         <el-col :span="6">
-          <el-button
-            type="primary"
-            @click="addDialogVisible = !addDialogVisible"
-            >添加用户</el-button
-          >
+          <el-button type="primary" @click="addDialogVisible = !addDialogVisible">添加用户</el-button>
         </el-col>
       </el-row>
       <!-- 表单区域 -->
@@ -40,39 +27,15 @@
         <el-table-column prop="role_name" label="角色"></el-table-column>
         <el-table-column label="状态">
           <template slot-scope="scope">
-            <el-switch
-              v-model="scope.row.mg_state"
-              @change="userStateChange(scope.row)"
-            ></el-switch>
+            <el-switch v-model="scope.row.mg_state" @change="userStateChange(scope.row)"></el-switch>
           </template>
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button
-              type="primary"
-              icon="el-icon-edit"
-              size="mini"
-              @click="showEditDialog(scope.row.id)"
-            ></el-button>
-            <el-button
-              type="danger"
-              icon="el-icon-delete"
-              size="mini"
-              @click="removeUser(scope.row.id)"
-            ></el-button>
-            <el-tooltip
-              class="item"
-              effect="dark"
-              content="分配角色"
-              placement="top"
-              :enterable="false"
-            >
-              <el-button
-                type="warning"
-                icon="el-icon-setting"
-                size="mini"
-                @click="setRole(scope.row)"
-              ></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="mini" @click="showEditDialog(scope.row.id)"></el-button>
+            <el-button type="danger" icon="el-icon-delete" size="mini" @click="removeUser(scope.row.id)"></el-button>
+            <el-tooltip class="item" effect="dark" content="分配角色" placement="top" :enterable="false">
+              <el-button type="warning" icon="el-icon-setting" size="mini" @click="setRole(scope.row)"></el-button>
             </el-tooltip>
           </template>
         </el-table-column>
@@ -90,18 +53,8 @@
       </el-pagination>
     </el-card>
     <!-- 添加用户Dialog对话框 -->
-    <el-dialog
-      title="添加用户"
-      :visible.sync="addDialogVisible"
-      width="50%"
-      @close="addDialogclosed"
-    >
-      <el-form
-        :model="addForm"
-        :rules="addFormRules"
-        ref="addFormRef"
-        label-width="80px"
-      >
+    <el-dialog title="添加用户" :visible.sync="addDialogVisible" width="50%" @close="addDialogclosed">
+      <el-form :model="addForm" :rules="addFormRules" ref="addFormRef" label-width="80px">
         <el-form-item label="用户名" prop="username">
           <el-input v-model="addForm.username"></el-input>
         </el-form-item>
@@ -121,18 +74,8 @@
       </span>
     </el-dialog>
     <!-- 修改用户Dialog对话框 -->
-    <el-dialog
-      title="修改用户"
-      :visible.sync="editDialogVisible"
-      width="50%"
-      @close="editDialogclosed"
-    >
-      <el-form
-        :model="editForm"
-        :rules="editFormRules"
-        ref="editFormRef"
-        label-width="80px"
-      >
+    <el-dialog title="修改用户" :visible.sync="editDialogVisible" width="50%" @close="editDialogclosed">
+      <el-form :model="editForm" :rules="editFormRules" ref="editFormRef" label-width="80px">
         <el-form-item label="用户名">
           <el-input v-model="editForm.username" disabled></el-input>
         </el-form-item>
@@ -149,25 +92,14 @@
       </span>
     </el-dialog>
     <!-- 分配角色Dialog对话框 -->
-    <el-dialog
-      title="分配角色"
-      :visible.sync="setRoledialogVisible"
-      width="50%"
-      @close="setRoleDialogClosed()"
-    >
+    <el-dialog title="分配角色" :visible.sync="setRoledialogVisible" width="50%" @close="setRoleDialogClosed()">
       <div>
         <p>当前用户：{{ userInfo.username }}</p>
         <p>当前角色：{{ userInfo.role_name }}</p>
         <p>
           分配新角色：
           <el-select v-model="selectedRoleId" placeholder="请选择">
-            <el-option
-              v-for="item in rolesList"
-              :key="item.id"
-              :label="item.roleName"
-              :value="item.id"
-            >
-            </el-option>
+            <el-option v-for="item in rolesList" :key="item.id" :label="item.roleName" :value="item.id"> </el-option>
           </el-select>
         </p>
       </div>
@@ -193,8 +125,7 @@ export default {
     }
     //验证手机号的规则
     var checkMobile = (rule, value, cb) => {
-      const regMobile =
-        /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/
+      const regMobile = /^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/
       if (regMobile.test(value)) {
         cb()
       } else {
@@ -273,8 +204,7 @@ export default {
       const { data: res } = await this.$http.get('users', {
         params: this.querInfo,
       })
-      if (res.meta.status !== 200)
-        return this.$message.error('获取用户列表失败！')
+      if (res.meta.status !== 200) return this.$message.error('获取用户列表失败！')
       this.userlist = res.data.users
       this.total = res.data.total
     },
@@ -290,9 +220,7 @@ export default {
     },
     //监听switch状态变化
     async userStateChange(userinfo) {
-      const { data: res } = await this.$http.put(
-        `users/${userinfo.id}/state/${userinfo.mg_state}`
-      )
+      const { data: res } = await this.$http.put(`users/${userinfo.id}/state/${userinfo.mg_state}`)
       if (res.meta.status !== 200) {
         userinfo.mg_state = !userinfo.mg_state
         return this.$message.error('更改用户状态失败！')
@@ -333,10 +261,7 @@ export default {
     editUser() {
       this.$refs.editFormRef.validate(async (valid) => {
         if (!valid) return
-        const { data: res } = await this.$http.put(
-          'users/' + this.editForm.id,
-          { email: this.editForm.email, mobile: this.editForm.mobile }
-        )
+        const { data: res } = await this.$http.put('users/' + this.editForm.id, { email: this.editForm.email, mobile: this.editForm.mobile })
         if (res.meta.status !== 200) {
           this.$message.error('修改用户信息失败')
         }
@@ -347,15 +272,11 @@ export default {
     },
     //删除用户
     async removeUser(id) {
-      const confirmResult = await this.$confirm(
-        '此操作将永久删除该用户, 是否继续?',
-        '提示',
-        {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消',
-          type: 'warning',
-        }
-      ).catch((err) => err)
+      const confirmResult = await this.$confirm('此操作将永久删除该用户, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      }).catch((err) => err)
       if (confirmResult !== 'confirm') {
         return this.$message.info('已取消删除')
       }
@@ -381,10 +302,7 @@ export default {
       if (!this.selectedRoleId) {
         return this.$message.error('请选择需要分配的角色')
       }
-      const { data: res } = await this.$http.put(
-        `users/${this.userInfo.id}/role`,
-        { rid: this.selectedRoleId }
-      )
+      const { data: res } = await this.$http.put(`users/${this.userInfo.id}/role`, { rid: this.selectedRoleId })
       if (res.meta.status !== 200) {
         return this.$message.error('更新角色失败！')
       }

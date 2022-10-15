@@ -2,8 +2,8 @@
   <el-container class="home-container">
     <!-- 头部区域 -->
     <el-header>
-      <div>
-        <img src="../assets/logo.png" alt="" />
+      <div class="avatar">
+        <img src="../assets/user.jpg" alt="" />
         <span>电商后台管理系统</span>
       </div>
       <el-button round @click="logout">退出</el-button>
@@ -12,24 +12,14 @@
     <el-container>
       <!-- 侧边栏 -->
       <el-aside :width="isCollapse ? '64px' : '200px'">
-        <div class="toggle-button" @click="toggleCollapse">|||</div>
+        <div class="toggle-button" @click="toggleCollapse">
+          <i class="el-icon-s-fold el-icon" v-if="isCollapse === false"></i>
+          <i class="el-icon-s-unfold el-icon" v-else></i>
+        </div>
         <!-- 侧边栏菜单区域 -->
-        <el-menu
-          background-color="#5c7dff"
-          text-color="#fff"
-          active-text-color="#409EFF"
-          unique-opened
-          :collapse="isCollapse"
-          :collapse-transition="false"
-          router
-          :default-active="activePath"
-        >
+        <el-menu background-color="#5c7dff" text-color="#fff" active-text-color="#ff9900" unique-opened :collapse="isCollapse" :collapse-transition="false" router :default-active="activePath">
           <!-- 一级菜单 -->
-          <el-submenu
-            :index="item.id + ''"
-            v-for="item in menulist"
-            :key="item.id"
-          >
+          <el-submenu :index="item.id + ''" v-for="item in menulist" :key="item.id">
             <template slot="title">
               <!-- 图标 -->
               <i :class="iconsObj[item.id]"></i>
@@ -37,12 +27,7 @@
               <span>{{ item.authName }}</span>
             </template>
             <!-- 二级菜单 -->
-            <el-menu-item
-              :index="'/' + subItem.path"
-              v-for="subItem in item.children"
-              :key="subItem.id"
-              @click="saveNavState('/' + subItem.path)"
-            >
+            <el-menu-item :index="'/' + subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveNavState('/' + subItem.path)">
               <template slot="title">
                 <!-- 图标 -->
                 <i class="el-icon-menu"></i>
@@ -79,8 +64,7 @@ export default {
     }
   },
   created() {
-    this.getMenuList(),
-      (this.activePath = window.sessionStorage.getItem('activePath'))
+    this.getMenuList(), (this.activePath = window.sessionStorage.getItem('activePath'))
   },
   methods: {
     logout() {
@@ -110,6 +94,7 @@ export default {
 <style lang="less" scoped>
 .home-container {
   height: 100%;
+  background-color: #f1f1f1;
 }
 .el-header {
   display: flex;
@@ -126,6 +111,7 @@ export default {
     > img {
       width: 50px;
       height: 50px;
+      border-radius: 25px;
     }
     > span {
       padding-left: 10px;
@@ -142,6 +128,7 @@ export default {
 
 .el-main {
   background-color: #f1f1f1;
+  padding: 0;
 }
 
 .iconfont {
@@ -149,12 +136,19 @@ export default {
 }
 
 .toggle-button {
-  background-color: #7591ff;
+  background-color: #5375fa;
   font-size: 10px;
   line-height: 24px;
   color: #fff;
   text-align: center;
   letter-spacing: 0.2em;
   cursor: pointer;
+}
+
+.el-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
 }
 </style>
